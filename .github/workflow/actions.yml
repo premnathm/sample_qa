@@ -3,9 +3,11 @@ name: Dev to Master Merge
 on:
   push:
     branches: [development]
+  pull_request:
+    branches: [development]
 
 jobs:
-  merge:
+  sonar-scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,11 +20,11 @@ jobs:
           git config --global user.name ""
           git config --global user.email ""
 
-      - name: Merge development into master
+      - name: Merge development into main
         run: |
-          git checkout master
-          git pull origin master
-          git merge --no-ff development -m "Automated merge of development into master"
-          git push origin master
+          git checkout main
+          git pull origin main
+          git merge --no-ff development -m "Automated merge of development into main"
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
